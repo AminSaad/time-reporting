@@ -23,6 +23,7 @@ class App extends Component {
         <Modal
           onClose={this.handleClose}
           onClick={this.handleShow}
+          onSave={this.handleSave}
           show={this.state.show}
         ></Modal>
       </>
