@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "./components/Modal";
-import { Button } from "react-bootstrap";
+import Calendar from "./components/Calendar";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -17,15 +18,22 @@ class App extends Component {
   render() {
     return (
       <>
-        <Button variant="primary" onClick={this.handleShow}>
-          +
-        </Button>
         <Modal
           onClose={this.handleClose}
           onClick={this.handleShow}
           onSave={this.handleSave}
           show={this.state.show}
         ></Modal>
+        <div className="App">
+          <header>
+            <div id="logo">
+              <span className="icon">date_range</span>
+            </div>
+          </header>
+          <main>
+            <Calendar onClick={this.handleShow} />
+          </main>
+        </div>
       </>
     );
   }

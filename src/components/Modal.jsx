@@ -25,6 +25,21 @@ class Modal extends Component {
     }
   ];
 
+  hours = [
+    {
+      _id: 1,
+      name: "13"
+    },
+    {
+      _id: 2,
+      name: "19"
+    },
+    {
+      _id: 3,
+      name: "22"
+    }
+  ];
+
   render() {
     const { show, onClose, onSave } = this.props;
 
@@ -42,10 +57,53 @@ class Modal extends Component {
               options={this.activities}
             />
             <div className="form-group">
-              <label htmlFor="Comment" className="col-form-label">
-                Kommentar:
-              </label>
-              <textarea className="form-control" id="comment"></textarea>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="gridCheck"
+                />
+                <label className="form-check-label" for="gridCheck">
+                  Heldag
+                </label>
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <Select
+                  name="hours"
+                  label="Från:"
+                  placeholder="tim"
+                  options={this.hours}
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <Select
+                  name="hours"
+                  label="."
+                  placeholder="min"
+                  options={this.hours}
+                  className="form-control"
+                />
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <Select
+                  name="hours"
+                  label="Till:"
+                  placeholder="tim"
+                  options={this.hours}
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <Select
+                  name="hours"
+                  label="."
+                  placeholder="min"
+                  options={this.hours}
+                />
+              </div>
             </div>
           </form>
         </BSMobal.Body>
