@@ -12,7 +12,7 @@ import {
   isSameDay,
   toDate
 } from "date-fns";
-
+import { sv } from "date-fns/esm/locale";
 class Calendar extends Component {
   state = {
     currentMonth: new Date(),
@@ -29,7 +29,9 @@ class Calendar extends Component {
           </div>
         </div>
         <div className="col col-center">
-          <span>{format(this.state.currentMonth, dateFormat)}</span>
+          <span>
+            {format(this.state.currentMonth, dateFormat, { locale: sv })}
+          </span>
         </div>
         <div className="col col-end" onClick={this.nextMonth}>
           <div className="icon">chevron_right</div>
@@ -45,7 +47,7 @@ class Calendar extends Component {
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className="col col-center" key={i}>
-          {format(addDays(startDate, i), dateFormat)}
+          {format(addDays(startDate, i), dateFormat, { locale: sv })}
         </div>
       );
     }
