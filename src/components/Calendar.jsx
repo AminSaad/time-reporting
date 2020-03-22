@@ -100,6 +100,7 @@ class Calendar extends Component {
     this.setState({
       selectedDate: day
     });
+    this.props.onClick();
   };
   nextMonth = () => {
     this.setState({
