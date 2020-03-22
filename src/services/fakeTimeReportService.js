@@ -3,19 +3,22 @@ const timeReports = [
     id: 1,
     date: "2020-03-23",
     startingTime: "08.00",
-    endTime: "17.00"
+    endTime: "17.00",
+    activity: "Arbete"
   },
   {
     id: 2,
     date: "2020-08-18",
     startingTime: "07.00",
-    endTime: "16.00"
+    endTime: "16.00",
+    activity: "Semester"
   },
   {
     id: 3,
     date: "2020-03-23",
     startingTime: "06.00",
-    endTime: "18.00"
+    endTime: "18.00",
+    activity: "sjuk"
   }
 ];
 
@@ -38,6 +41,7 @@ export function saveTimeReport(timeReport) {
   timeReportInDb.date = timeReport.date;
   timeReportInDb.startingTime = timeReport.startingTime;
   timeReportInDb.endTime = timeReport.endTime;
+  timeReportInDb.activity = timeReport.activity;
 
   if (!timeReport.id) {
     timeReport.id = timeReports.length + 1;
