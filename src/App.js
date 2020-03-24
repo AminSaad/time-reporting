@@ -14,6 +14,9 @@ class App extends Component {
     console.log("Saved");
     this.setState({ show: false });
   };
+  handleDelete = () => {
+    console.log("Deleted");
+  };
 
   render() {
     return (
@@ -22,6 +25,7 @@ class App extends Component {
           onClose={this.handleClose}
           onClick={this.handleShow}
           onSave={this.handleSave}
+          onDelete={this.handleDelete}
           show={this.state.show}
         ></Modal>
         <div className="App">
