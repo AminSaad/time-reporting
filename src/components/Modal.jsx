@@ -108,7 +108,7 @@ class Modal extends Component {
           </form>
         </BSMobal.Body>
         <BSMobal.Footer>
-          <Button variant="danger" onClick={onDelete}>
+          <Button variant="danger" onClick={() => onDelete(this.id)}>
             Ta bort
           </Button>
           <Button variant="secondary" onClick={onClose}>
