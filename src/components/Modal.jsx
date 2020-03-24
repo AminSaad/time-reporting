@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import _ from "lodash";
 import { Button, Modal as BSMobal } from "react-bootstrap";
 import Select from "./common/Select";
 
@@ -25,20 +26,8 @@ class Modal extends Component {
     }
   ];
 
-  hours = [
-    {
-      _id: 1,
-      name: "13"
-    },
-    {
-      _id: 2,
-      name: "19"
-    },
-    {
-      _id: 3,
-      name: "22"
-    }
-  ];
+  hours = _.range(0, 25).map(hours => ({ _id: hours, name: hours }));
+  minutes = _.range(0, 60).map(minutes => ({ _id: minutes, name: minutes }));
 
   render() {
     const { show, onClose, onSave } = this.props;
@@ -63,7 +52,7 @@ class Modal extends Component {
                   type="checkbox"
                   id="gridCheck"
                 />
-                <label className="form-check-label" for="gridCheck">
+                <label className="form-check-label" htmlFor="gridCheck">
                   Heldag
                 </label>
               </div>
@@ -82,7 +71,7 @@ class Modal extends Component {
                   name="hours"
                   label="."
                   placeholder="min"
-                  options={this.hours}
+                  options={this.minutes}
                   className="form-control"
                 />
               </div>
@@ -101,7 +90,7 @@ class Modal extends Component {
                   name="hours"
                   label="."
                   placeholder="min"
-                  options={this.hours}
+                  options={this.minutes}
                 />
               </div>
             </div>
