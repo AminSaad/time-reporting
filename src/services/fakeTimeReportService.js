@@ -2,23 +2,30 @@ const timeReports = [
   {
     id: 1,
     date: "2020-03-23",
-    startingTime: "08.00",
-    endTime: "17.00",
+    startHours: 8,
+    endHour: 17,
+    startMinutes: 5,
+    endMinutes: 30,
     activity: "Arbete"
   },
   {
     id: 2,
     date: "2020-08-18",
-    startingTime: "07.00",
-    endTime: "16.00",
+    startHours: 14,
+    endHour: 22,
+    startMinutes: 15,
+    endMinutes: 25,
     activity: "Semester"
   },
   {
+
     id: 3,
-    date: "2020-03-23",
-    startingTime: "06.00",
-    endTime: "18.00",
-    activity: "sjuk"
+    date: "2020-12-3",
+    startHours: 5,
+    endHour: 15,
+    startMinutes: 45,
+    endMinutes: 10,
+    activity: "Sjuk"
   }
 ];
 
