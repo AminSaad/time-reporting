@@ -41,7 +41,7 @@ class Modal extends Component {
   ];
 
   render() {
-    const { show, onClose, onSave } = this.props;
+    const { show, onClose, onSave, onDelete } = this.props;
 
     return (
       <BSMobal show={show} onHide={onClose}>
@@ -108,6 +108,9 @@ class Modal extends Component {
           </form>
         </BSMobal.Body>
         <BSMobal.Footer>
+          <Button variant="danger" onClick={() => onDelete(this.id)}>
+            Ta bort
+          </Button>
           <Button variant="secondary" onClick={onClose}>
             Stäng
           </Button>
