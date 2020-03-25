@@ -63,7 +63,7 @@ class Modal extends Component {
                   type="checkbox"
                   id="gridCheck"
                 />
-                <label className="form-check-label" for="gridCheck">
+                <label className="form-check-label" htmlFor="gridCheck">
                   Heldag
                 </label>
               </div>
