@@ -25,11 +25,6 @@ class App extends Component {
           show={this.state.show}
         ></Modal>
         <div className="App">
-          <header>
-            <div id="logo">
-              <span className="icon">date_range</span>
-            </div>
-          </header>
           <main>
             <Calendar onClick={this.handleShow} />
           </main>
