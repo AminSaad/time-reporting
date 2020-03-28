@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import Modal from "./components/Modal";
 import Calendar from "./components/Calendar";
-import { deleteTimeReport } from "./services/fakeTimeReportService";
+import {
+  deleteTimeReport,
+  saveTimeReport,
+  getTimeReports
+} from "./services/fakeTimeReportService";
 import "./App.css";
 
 class App extends Component {
@@ -11,8 +15,9 @@ class App extends Component {
 
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
-  handleSave = () => {
-    console.log("Saved");
+  handleSave = timeReport => {
+    saveTimeReport(timeReport);
+    console.log("Saved", getTimeReports());
     this.setState({ show: false });
   };
   handleDelete = id => {
