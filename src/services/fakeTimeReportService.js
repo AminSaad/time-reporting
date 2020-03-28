@@ -18,7 +18,6 @@ const timeReports = [
     activity: "Semester"
   },
   {
-
     id: 3,
     date: "2020-12-3",
     startHours: 5,
@@ -46,8 +45,10 @@ export function deleteTimeReport(id) {
 export function saveTimeReport(timeReport) {
   const timeReportInDb = timeReports.find(tr => tr.id === timeReport.id) || {};
   timeReportInDb.date = timeReport.date;
-  timeReportInDb.startingTime = timeReport.startingTime;
-  timeReportInDb.endTime = timeReport.endTime;
+  timeReportInDb.startHours = timeReport.startHours;
+  timeReportInDb.endHour = timeReport.endHour;
+  timeReportInDb.startMinutes = timeReport.startMinutes;
+  timeReportInDb.endMinutes = timeReport.endMinutes;
   timeReportInDb.activity = timeReport.activity;
 
   if (!timeReport.id) {
