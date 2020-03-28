@@ -1,11 +1,44 @@
-import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import _ from "lodash";
+import React from "react";
 import { Button, Modal as BSMobal } from "react-bootstrap";
-import Select from "./common/Select";
+import "bootstrap/dist/css/bootstrap.css";
+import Joi from "@hapi/joi";
+import _ from "lodash";
+import Form from "./common/Form";
 
-class Modal extends Component {
-  state = {};
+class Modal extends Form {
+  state = {
+    data: {
+      date: "",
+      startHours: "",
+      endHour: "",
+      startMinutes: "",
+      endMinutes: "",
+      activity: ""
+    },
+    errors: {}
+  };
+
+  schema = Joi.object({
+    _id: Joi.string(),
+    date: Joi.date()
+      .required()
+      .label("Datum"),
+    startHours: Joi.number()
+      .required()
+      .label("Start timme"),
+    endHour: Joi.number()
+      .required()
+      .label("Slut timme"),
+    startMinutes: Joi.number()
+      .required()
+      .label("Start minut"),
+    endMinutes: Joi.number()
+      .required()
+      .label("Slut minut"),
+    activity: Joi.string()
+      .required()
+      .label("Aktivitet")
+  });
 
   activities = [
     {
@@ -31,7 +64,6 @@ class Modal extends Component {
 
   render() {
     const { show, onClose, onSave, onDelete } = this.props;
-
     return (
       <BSMobal show={show} onHide={onClose}>
         <BSMobal.Header closeButton>
@@ -39,59 +71,26 @@ class Modal extends Component {
         </BSMobal.Header>
         <BSMobal.Body>
           <form>
-            <Select
-              name="activity"
-              label="Aktivitet:"
-              placeholder="Välj..."
-              options={this.activities}
-            />
-            <div className="form-group">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="gridCheck"
-                />
-                <label className="form-check-label" htmlFor="gridCheck">
-                  Heldag
-                </label>
+            {this.renderSelect(
+              "activity",
+              "Aktivitet:",
+              this.activities,
+              "Välj..."
+            )}
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                {this.renderSelect("startHours", "Från:", this.hours, "tim...")}
+              </div>
+              <div className="form-group col-md-4">
+                {this.renderSelect("startMinutes", ".", this.minutes, "min...")}
               </div>
             </div>
             <div className="form-row">
               <div className="form-group col-md-4">
-                <Select
-                  name="hours"
-                  label="Från:"
-                  placeholder="tim"
-                  options={this.hours}
-                />
+                {this.renderSelect("endHour", "Till:", this.hours, "tim...")}
               </div>
               <div className="form-group col-md-4">
-                <Select
-                  name="hours"
-                  label="."
-                  placeholder="min"
-                  options={this.minutes}
-                  className="form-control"
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group col-md-4">
-                <Select
-                  name="hours"
-                  label="Till:"
-                  placeholder="tim"
-                  options={this.hours}
-                />
-              </div>
-              <div className="form-group col-md-4">
-                <Select
-                  name="hours"
-                  label="."
-                  placeholder="min"
-                  options={this.minutes}
-                />
+                {this.renderSelect("endMinutes", ".", this.minutes, "min...")}
               </div>
             </div>
           </form>
@@ -103,7 +102,7 @@ class Modal extends Component {
           <Button variant="secondary" onClick={onClose}>
             Stäng
           </Button>
-          <Button variant="primary" onClick={onSave}>
+          <Button variant="primary" onClick={() => onSave(this.state.data)}>
             Bekräfta
           </Button>
         </BSMobal.Footer>

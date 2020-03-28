@@ -45,7 +45,7 @@ export function saveTimeReport(timeReport) {
 
   if (!timeReport.id) {
     timeReport.id = timeReports.length + 1;
-    timeReport.push(timeReportInDb);
+    timeReports.push(timeReportInDb);
   }
 
   return timeReportInDb;
