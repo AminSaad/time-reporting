@@ -71,33 +71,33 @@ class Calendar extends Component {
     let formattedDate = "";
 
     while (day <= endDate) {
-
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
-        let cssClass = "col cell"
+        let cssClass = "col cell";
         const cloneDay = day;
         const foundDate = timeReports.filter(
           timeReport => timeReport.date === format(day, "yyyy-MM-d")
         );
-        if (foundDate.length > 0) { cssClass += " populated" }
+        if (foundDate.length > 0) {
+          cssClass += " populated";
+        }
         days.push(
           <div
             className={`${cssClass} ${
               !isSameMonth(day, monthStart)
                 ? "disabled"
                 : isSameDay(day, selectedDate)
-                  ? "selected"
-                  : ""
-              }`}
+                ? "selected"
+                : ""
+            }`}
             key={day}
             onClick={() => this.onDateClick(toDate(cloneDay))}
           >
             <span className="number ">{formattedDate}</span>
-            <span className="bg">{formattedDate}</span>
           </div>
         );
 
-        console.log(foundDate)
+        console.log(foundDate);
         day = addDays(day, 1);
       }
       rows.push(
