@@ -95,7 +95,6 @@ class Calendar extends Component {
             onClick={() => this.onDateClick(toDate(cloneDay))}
           >
             <span className="number ">{formattedDate}</span>
-            <span className="bg">{formattedDate}</span>
           </div>
         );
 

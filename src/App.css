@@ -171,9 +171,7 @@ main {
 }
 
 .calendar .body .selected {
-  border-top: 10px solid transparent;
-  border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
-  border-image-slice: 1;
+  border-top: 10px solid #1a8fff;
 }
 
 .calendar .body .row {
@@ -202,22 +200,9 @@ main {
   pointer-events: none;
 }
 
-.calendar .body .cell .bg {
-  font-weight: 700;
-  line-height: 1;
-  color: var(--main-color);
-  opacity: 0;
-  font-size: 8em;
-  position: absolute;
-  top: -0.2em;
-  right: -0.05em;
-  transition: 0.25s ease-out;
-  letter-spacing: -0.07em;
-}
+
 .calendar .body .populated {
-  border-bottom: 10px solid transparent;
-  border-image: linear-gradient(45deg, #1aff1a 0%, #34da6b 40%);
-  border-image-slice: 1;
+  border-bottom: 10px solid var(--populated-color);
 }
 
 .calendar .body .cell:hover .bg,
