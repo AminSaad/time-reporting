@@ -17,12 +17,10 @@ class App extends Component {
   handleShow = () => this.setState({ show: true });
   handleSave = timeReport => {
     saveTimeReport(timeReport);
-    console.log("Saved", getTimeReports());
     this.setState({ show: false });
   };
   handleDelete = id => {
     deleteTimeReport(id);
-    console.log("Deleted");
   };
 
   render() {
