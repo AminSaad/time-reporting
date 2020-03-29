@@ -14,10 +14,10 @@ import {
 } from "date-fns";
 import { sv } from "date-fns/esm/locale";
 import { getTimeReports } from "../services/fakeTimeReportService";
+
 class Calendar extends Component {
   state = {
     currentMonth: new Date(),
-    selectedDate: new Date(),
     timeReports: []
   };
   componentDidMount() {
@@ -59,7 +59,8 @@ class Calendar extends Component {
   }
 
   renderCells() {
-    const { currentMonth, selectedDate, timeReports } = this.state;
+    const { selectedDate } = this.props;
+    const { currentMonth, timeReports } = this.state;
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart, { weekStartsOn: 1 });
@@ -71,24 +72,25 @@ class Calendar extends Component {
     let formattedDate = "";
 
     while (day <= endDate) {
-
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
-        let cssClass = "col cell"
+        let cssClass = "col cell";
         const cloneDay = day;
         const foundDate = timeReports.filter(
           timeReport => timeReport.date === format(day, "yyyy-MM-d")
         );
-        if (foundDate.length > 0) { cssClass += " populated" }
+        if (foundDate.length > 0) {
+          cssClass += " populated";
+        }
         days.push(
           <div
             className={`${cssClass} ${
               !isSameMonth(day, monthStart)
                 ? "disabled"
                 : isSameDay(day, selectedDate)
-                  ? "selected"
-                  : ""
-              }`}
+                ? "selected"
+                : ""
+            }`}
             key={day}
             onClick={() => this.onDateClick(toDate(cloneDay))}
           >
@@ -97,7 +99,7 @@ class Calendar extends Component {
           </div>
         );
 
-        console.log(foundDate)
+        console.log(foundDate);
         day = addDays(day, 1);
       }
       rows.push(
@@ -109,13 +111,13 @@ class Calendar extends Component {
     }
     return <div className="body">{rows}</div>;
   }
+
   onDateClick = day => {
     console.log(day.getDate());
-    this.setState({
-      selectedDate: day
-    });
+    this.props.onDateSelect(format(day, "do MMMM", { locale: sv }));
     this.props.onClick();
   };
+
   nextMonth = () => {
     this.setState({
       currentMonth: addMonths(this.state.currentMonth, 1)

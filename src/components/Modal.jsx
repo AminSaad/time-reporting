@@ -63,11 +63,11 @@ class Modal extends Form {
   minutes = _.range(0, 60).map(minutes => ({ _id: minutes, name: minutes }));
 
   render() {
-    const { show, onClose, onSave, onDelete } = this.props;
+    const { show, onClose, onSave, onDelete, selectedDate } = this.props;
     return (
       <BSMobal show={show} onHide={onClose}>
         <BSMobal.Header closeButton>
-          <BSMobal.Title>Lägg till pass</BSMobal.Title>
+          <BSMobal.Title>Lägg till pass {selectedDate}</BSMobal.Title>
         </BSMobal.Header>
         <BSMobal.Body>
           <form>
