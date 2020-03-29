@@ -98,7 +98,6 @@ class Calendar extends Component {
           </div>
         );
 
-        console.log(foundDate);
         day = addDays(day, 1);
       }
       rows.push(
@@ -112,8 +111,9 @@ class Calendar extends Component {
   }
 
   onDateClick = day => {
-    console.log(day.getDate());
-    this.props.onDateSelect(format(day, "do MMMM", { locale: sv }));
+    this.setState({
+      selectedDate: day
+    });
     this.props.onClick();
   };
 
