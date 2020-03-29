@@ -10,9 +10,10 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    show: false
+    show: false,
+    selectedDate: new Date()
   };
-
+  handleDateSelect = date => this.setState({ selectedDate: date });
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
   handleSave = timeReport => {
@@ -34,10 +35,15 @@ class App extends Component {
           onSave={this.handleSave}
           onDelete={this.handleDelete}
           show={this.state.show}
+          selectedDate={this.state.selectedDate}
         ></Modal>
         <div className="App">
           <main>
-            <Calendar onClick={this.handleShow} />
+            <Calendar
+              onClick={this.handleShow}
+              onDateSelect={this.handleDateSelect}
+              selectedDate={this.state.selectedDate}
+            />
           </main>
         </div>
       </>
