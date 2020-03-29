@@ -20,9 +20,6 @@ class Modal extends Form {
 
   schema = Joi.object({
     _id: Joi.string(),
-    date: Joi.date()
-      .required()
-      .label("Datum"),
     startHours: Joi.number()
       .required()
       .label("Start timme"),
