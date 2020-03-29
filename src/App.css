@@ -22,12 +22,13 @@
 /* VARIABLES */
 
 :root {
-  --main-color: #1a8fff;
+  --main-color: #1a3cff;
   --text-color: #777;
   --text-color-light: #ccc;
   --border-color: #eee;
   --bg-color: #f9f9f9;
   --neutral-color: #fff;
+  --populated-color: #1aff1a;
 }
 
 /* GENERAL */
@@ -148,7 +149,7 @@ main {
 .calendar .days {
   text-transform: uppercase;
   font-weight: 400;
-  color: var(--text-color-light);
+  color: var(--text-color);
   font-size: 70%;
   padding: 0.75em 0;
   border-bottom: 1px solid var(--border-color);
@@ -170,7 +171,7 @@ main {
 }
 
 .calendar .body .selected {
-  border-left: 10px solid transparent;
+  border-top: 10px solid transparent;
   border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
   border-image-slice: 1;
 }
@@ -212,6 +213,11 @@ main {
   right: -0.05em;
   transition: 0.25s ease-out;
   letter-spacing: -0.07em;
+}
+.calendar .body .populated {
+  border-bottom: 10px solid transparent;
+  border-image: linear-gradient(45deg, #1aff1a 0%, #34da6b 40%);
+  border-image-slice: 1;
 }
 
 .calendar .body .cell:hover .bg,

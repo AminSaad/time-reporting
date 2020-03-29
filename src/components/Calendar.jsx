@@ -13,11 +13,17 @@ import {
   toDate
 } from "date-fns";
 import { sv } from "date-fns/esm/locale";
+import { getTimeReports } from "../services/fakeTimeReportService";
 class Calendar extends Component {
   state = {
     currentMonth: new Date(),
-    selectedDate: new Date()
+    selectedDate: new Date(),
+    timeReports: []
   };
+  componentDidMount() {
+    this.setState({ timeReports: getTimeReports() });
+  }
+
   renderHeader() {
     const dateFormat = "MMMM yyyy";
 
@@ -53,7 +59,7 @@ class Calendar extends Component {
   }
 
   renderCells() {
-    const { currentMonth, selectedDate } = this.state;
+    const { currentMonth, selectedDate, timeReports } = this.state;
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart, { weekStartsOn: 1 });
@@ -63,26 +69,35 @@ class Calendar extends Component {
     let days = [];
     let day = startDate;
     let formattedDate = "";
+
     while (day <= endDate) {
+
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
+        let cssClass = "col cell"
         const cloneDay = day;
+        const foundDate = timeReports.filter(
+          timeReport => timeReport.date === format(day, "yyyy-MM-d")
+        );
+        if (foundDate.length > 0) { cssClass += " populated" }
         days.push(
           <div
-            className={`col cell ${
+            className={`${cssClass} ${
               !isSameMonth(day, monthStart)
                 ? "disabled"
                 : isSameDay(day, selectedDate)
-                ? "selected"
-                : ""
-            }`}
+                  ? "selected"
+                  : ""
+              }`}
             key={day}
             onClick={() => this.onDateClick(toDate(cloneDay))}
           >
-            <span className="number">{formattedDate}</span>
+            <span className="number ">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
           </div>
         );
+
+        console.log(foundDate)
         day = addDays(day, 1);
       }
       rows.push(
