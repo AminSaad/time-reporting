@@ -3,8 +3,7 @@ import Modal from "./components/Modal";
 import Calendar from "./components/Calendar";
 import {
   deleteTimeReport,
-  saveTimeReport,
-  getTimeReports
+  saveTimeReport
 } from "./services/fakeTimeReportService";
 import "./App.css";
 
@@ -13,6 +12,7 @@ class App extends Component {
     show: false,
     selectedDate: new Date()
   };
+
   handleDateSelect = date => this.setState({ selectedDate: date });
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
