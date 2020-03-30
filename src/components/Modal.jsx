@@ -3,6 +3,8 @@ import { Button, Modal as BSMobal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import Joi from "@hapi/joi";
 import _ from "lodash";
+import { format } from "date-fns";
+import { sv } from "date-fns/esm/locale";
 import Form from "./common/Form";
 
 class Modal extends Form {
@@ -64,7 +66,9 @@ class Modal extends Form {
     return (
       <BSMobal show={show} onHide={onClose}>
         <BSMobal.Header closeButton>
-          <BSMobal.Title>Lägg till pass {selectedDate}</BSMobal.Title>
+          <BSMobal.Title>
+            Lägg till pass {format(selectedDate, "do MMMM", { locale: sv })}
+          </BSMobal.Title>
         </BSMobal.Header>
         <BSMobal.Body>
           <form>
