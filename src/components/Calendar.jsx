@@ -14,10 +14,10 @@ import {
 } from "date-fns";
 import { sv } from "date-fns/esm/locale";
 import { getTimeReports } from "../services/fakeTimeReportService";
+
 class Calendar extends Component {
   state = {
     currentMonth: new Date(),
-    selectedDate: new Date(),
     timeReports: []
   };
   componentDidMount() {
@@ -59,7 +59,8 @@ class Calendar extends Component {
   }
 
   renderCells() {
-    const { currentMonth, selectedDate, timeReports } = this.state;
+    const { selectedDate } = this.props;
+    const { currentMonth, timeReports } = this.state;
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart, { weekStartsOn: 1 });
@@ -108,12 +109,12 @@ class Calendar extends Component {
     }
     return <div className="body">{rows}</div>;
   }
+
   onDateClick = day => {
-    this.setState({
-      selectedDate: day
-    });
+    this.props.onDateSelect(format(day, "do MMMM", { locale: sv }));
     this.props.onClick();
   };
+
   nextMonth = () => {
     this.setState({
       currentMonth: addMonths(this.state.currentMonth, 1)
