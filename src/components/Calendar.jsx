@@ -111,9 +111,7 @@ class Calendar extends Component {
   }
 
   onDateClick = day => {
-    this.setState({
-      selectedDate: day
-    });
+    this.props.onDateSelect(format(day, "do MMMM", { locale: sv }));
     this.props.onClick();
   };
 
