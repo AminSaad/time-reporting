@@ -95,11 +95,9 @@ class Calendar extends Component {
             onClick={() => this.onDateClick(toDate(cloneDay))}
           >
             <span className="number ">{formattedDate}</span>
-            <span className="bg">{formattedDate}</span>
           </div>
         );
 
-        console.log(foundDate);
         day = addDays(day, 1);
       }
       rows.push(
@@ -113,8 +111,7 @@ class Calendar extends Component {
   }
 
   onDateClick = day => {
-    console.log(day.getDate());
-    this.props.onDateSelect(format(day, "do MMMM", { locale: sv }));
+    this.props.onDateSelect(day);
     this.props.onClick();
   };
 

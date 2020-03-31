@@ -3,7 +3,10 @@ import { Button, Modal as BSMobal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import Joi from "@hapi/joi";
 import _ from "lodash";
+import { format } from "date-fns";
+import { sv } from "date-fns/esm/locale";
 import Form from "./common/Form";
+import { getTimeReports } from "../services/fakeTimeReportService";
 
 class Modal extends Form {
   state = {
@@ -20,9 +23,6 @@ class Modal extends Form {
 
   schema = Joi.object({
     _id: Joi.string(),
-    date: Joi.date()
-      .required()
-      .label("Datum"),
     startHours: Joi.number()
       .required()
       .label("Start timme"),
@@ -64,10 +64,13 @@ class Modal extends Form {
 
   render() {
     const { show, onClose, onSave, onDelete, selectedDate } = this.props;
+    console.log(getTimeReports());
     return (
       <BSMobal show={show} onHide={onClose}>
         <BSMobal.Header closeButton>
-          <BSMobal.Title>Lägg till pass {selectedDate}</BSMobal.Title>
+          <BSMobal.Title>
+            Lägg till pass {format(selectedDate, "do MMMM", { locale: sv })}
+          </BSMobal.Title>
         </BSMobal.Header>
         <BSMobal.Body>
           <form>
@@ -96,7 +99,10 @@ class Modal extends Form {
           </form>
         </BSMobal.Body>
         <BSMobal.Footer>
-          <Button variant="danger" onClick={() => onDelete(this.id)}>
+          <Button
+            variant="danger"
+            onClick={() => onDelete(format(selectedDate, "yyyy-MM-dd"))}
+          >
             Ta bort
           </Button>
           <Button variant="secondary" onClick={onClose}>

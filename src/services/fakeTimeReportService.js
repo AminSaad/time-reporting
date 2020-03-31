@@ -36,10 +36,11 @@ export function getTimeReport(id) {
   return timeReports.find(timeReport => timeReport.id === id);
 }
 
-export function deleteTimeReport(id) {
-  const index = timeReports.findIndex(timeReport => timeReport.id === id);
-
-  timeReports.splice(index, 1);
+export function deleteTimeReport(date) {
+  const index = timeReports.findIndex(timeReport => timeReport.date === date);
+  if (index >= 0) {
+    timeReports.splice(index, 1);
+  }
 }
 
 export function saveTimeReport(timeReport) {
