@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Modal from "./Modal";
 import Calendar from "./Calendar";
-import { Link } from "react-router-dom";
 import {
   deleteTimeReport,
   saveTimeReport,
@@ -15,13 +14,17 @@ class CalendarPage extends Component {
   };
 
   handleDateSelect = date => this.setState({ selectedDate: date });
+
   handleClose = () => this.setState({ show: false });
+
   handleShow = () => this.setState({ show: true });
+
   handleSave = timeReport => {
     saveTimeReport(timeReport);
     console.log("Saved", getTimeReports());
     this.setState({ show: false });
   };
+
   handleDelete = id => {
     deleteTimeReport(id);
     console.log("Deleted");
@@ -30,14 +33,6 @@ class CalendarPage extends Component {
   render() {
     return (
       <div>
-        <Link
-          style={{ margin: "5px" }}
-          className="btn btn-primary"
-          to="/register"
-        >
-          Registrera
-        </Link>
-        <p>Tillfällig registrera knapp</p>
         <Modal
           onClose={this.handleClose}
           onClick={this.handleShow}
