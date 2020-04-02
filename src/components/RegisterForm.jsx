@@ -28,6 +28,7 @@ class RegisterForm extends Form {
 
   doSubmit() {
     console.log("Registrerad");
+    this.props.history.push("/login");
     // try {
     //   const response = await userService.register(this.state.data);
     //   authServices.loginWithJwt(response.headers["x-auth-token"]);
