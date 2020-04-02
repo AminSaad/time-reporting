@@ -1,50 +1,21 @@
 import React, { Component } from "react";
-import Modal from "./components/Modal";
-import Calendar from "./components/Calendar";
-import {
-  deleteTimeReport,
-  saveTimeReport
-} from "./services/fakeTimeReportService";
+import { Route, Switch } from "react-router-dom";
+import RegisterForm from "./components/RegisterForm";
+import CalendarPage from "./components/CalendarPage";
+import LoginForm from "./components/LoginForm";
 import "./App.css";
 
 class App extends Component {
-  state = {
-    show: false,
-    selectedDate: null
-  };
-
-  handleDateSelect = date => this.setState({ selectedDate: date });
-  handleClose = () => this.setState({ show: false, selectedDate: null });
-  handleShow = () => this.setState({ show: true });
-  handleSave = timeReport => {
-    saveTimeReport(timeReport);
-    this.setState({ show: false });
-  };
-  handleDelete = id => {
-    deleteTimeReport(id);
-  };
-
   render() {
     return (
       <>
-        {this.state.selectedDate && (
-          <Modal
-            onClose={this.handleClose}
-            onClick={this.handleShow}
-            onSave={this.handleSave}
-            onDelete={this.handleDelete}
-            show={this.state.show}
-            selectedDate={this.state.selectedDate}
-          ></Modal>
-        )}
-        <div className="App">
-          <main>
-            <Calendar
-              onClick={this.handleShow}
-              onDateSelect={this.handleDateSelect}
-              selectedDate={this.state.selectedDate}
-            />
-          </main>
+        <div className="container">
+          <Switch>
+            <Route path="/login" component={LoginForm} />
+            <Route path="/register" component={RegisterForm} />
+            <Route path="/calendar" component={CalendarPage} />
+            <Route path="/" component={LoginForm} />
+          </Switch>
         </div>
       </>
     );

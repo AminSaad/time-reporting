@@ -59,8 +59,12 @@ class Modal extends Form {
     }
   ];
 
-  hours = _.range(0, 25).map(hours => ({ _id: hours, name: hours }));
-  minutes = _.range(0, 60).map(minutes => ({ _id: minutes, name: minutes }));
+  getTimeArray(start, end) {
+    return _.range(start, end + 1).map(time => {
+      const name = time < 10 ? "0" + time : time;
+      return { _id: time, name };
+    });
+  }
 
   componentDidMount() {
     const formatedDate = format(this.props.selectedDate, "yyyy-MM-dd");
@@ -100,18 +104,38 @@ class Modal extends Form {
             )}
             <div className="form-row">
               <div className="form-group col-md-4">
-                {this.renderSelect("startHours", "Från:", this.hours, "tim...")}
+                {this.renderSelect(
+                  "startHours",
+                  "Från:",
+                  this.getTimeArray(0, 23),
+                  "tim..."
+                )}
               </div>
               <div className="form-group col-md-4">
-                {this.renderSelect("startMinutes", ".", this.minutes, "min...")}
+                {this.renderSelect(
+                  "startMinutes",
+                  ".",
+                  this.getTimeArray(0, 59),
+                  "min..."
+                )}
               </div>
             </div>
             <div className="form-row">
               <div className="form-group col-md-4">
-                {this.renderSelect("endHour", "Till:", this.hours, "tim...")}
+                {this.renderSelect(
+                  "endHour",
+                  "Till:",
+                  this.getTimeArray(0, 23),
+                  "tim..."
+                )}
               </div>
               <div className="form-group col-md-4">
-                {this.renderSelect("endMinutes", ".", this.minutes, "min...")}
+                {this.renderSelect(
+                  "endMinutes",
+                  ".",
+                  this.getTimeArray(0, 59),
+                  "min..."
+                )}
               </div>
             </div>
           </form>
