@@ -76,10 +76,10 @@ class Calendar extends Component {
         formattedDate = format(day, dateFormat);
         let cssClass = "col cell";
         const cloneDay = day;
-        const foundDate = timeReports.filter(
-          timeReport => timeReport.date === format(day, "yyyy-MM-d")
+        const foundDate = timeReports.find(
+          timeReport => timeReport.date === format(day, "yyyy-MM-dd")
         );
-        if (foundDate.length > 0) {
+        if (foundDate) {
           cssClass += " populated";
         }
         days.push(
