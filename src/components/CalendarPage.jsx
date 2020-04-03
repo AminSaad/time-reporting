@@ -1,45 +1,65 @@
 import React, { Component } from "react";
 import Modal from "./Modal";
 import Calendar from "./Calendar";
+import { toast } from "react-toastify";
 import {
   deleteTimeReport,
   saveTimeReport,
-  getTimeReports
-} from "../services/fakeTimeReportService";
+  getTimeReports,
+} from "../services/timeReportService";
 
 class CalendarPage extends Component {
   state = {
     show: false,
-    selectedDate: null,
-    timeReports: getTimeReports()
+    selectedTimeReport: null,
+    timeReports: [],
   };
 
-  handleDateSelect = date => this.setState({ selectedDate: date });
+  async componentDidMount() {
+    const { data: timeReports } = await getTimeReports();
+    this.setState({ timeReports });
+  }
 
-  handleClose = () => this.setState({ show: false, selectedDate: null });
+  handleDateSelect = (timeReport) =>
+    this.setState({ selectedTimeReport: timeReport });
+
+  handleClose = () => this.setState({ show: false, selectedTimeReport: null });
 
   handleShow = () => this.setState({ show: true });
 
-  handleSave = timeReport => {
+  handleSave = (timeReport) => {
     saveTimeReport(timeReport);
     this.setState({ show: false });
   };
 
-  handleDelete = id => {
-    deleteTimeReport(id);
+  handleDelete = async (timeReport) => {
+    const originalTimeReports = this.state.timeReports;
+    const timeReports = originalTimeReports.filter(
+      (tr) => tr._id !== timeReport._id
+    );
+    this.setState({ timeReports });
+
+    try {
+      await deleteTimeReport(timeReport._id);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast("Denna rapport har redan tagits bort");
+      this.setState({ timeReports: originalTimeReports });
+    }
   };
 
   render() {
+    console.log("Calendar PAGE", this.state.selectedTimeReport);
     return (
       <>
-        {this.state.selectedDate && (
+        {this.state.show && (
           <Modal
             onClose={this.handleClose}
             onClick={this.handleShow}
             onSave={this.handleSave}
             onDelete={this.handleDelete}
             show={this.state.show}
-            selectedDate={this.state.selectedDate}
+            timeReport={this.state.selectedTimeReport}
           ></Modal>
         )}
         <div className="App">
@@ -48,7 +68,7 @@ class CalendarPage extends Component {
               timeReports={this.state.timeReports}
               onClick={this.handleShow}
               onDateSelect={this.handleDateSelect}
-              selectedDate={this.state.selectedDate}
+              selectedTimeReport={this.state.selectedTimeReport}
             />
           </main>
         </div>

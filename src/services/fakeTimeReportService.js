@@ -6,7 +6,7 @@ const timeReports = [
     endHour: 17,
     startMinutes: 5,
     endMinutes: 30,
-    activity: { _id: 1, name: "Arbete" }
+    activity: { _id: 1, name: "Arbete" },
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const timeReports = [
     endHour: 22,
     startMinutes: 15,
     endMinutes: 25,
-    activity: { _id: 4, name: "Ledighet" }
+    activity: { _id: 4, name: "Ledighet" },
   },
   {
     id: 3,
@@ -24,8 +24,8 @@ const timeReports = [
     endHour: 15,
     startMinutes: 45,
     endMinutes: 10,
-    activity: { _id: 2, name: "Sjukdom" }
-  }
+    activity: { _id: 2, name: "Sjukdom" },
+  },
 ];
 
 export function getTimeReports() {
@@ -33,18 +33,19 @@ export function getTimeReports() {
 }
 
 export function getTimeReport(date) {
-  return timeReports.find(timeReport => timeReport.date === date);
+  return timeReports.find((timeReport) => timeReport.date === date);
 }
 
 export function deleteTimeReport(date) {
-  const index = timeReports.findIndex(timeReport => timeReport.date === date);
+  const index = timeReports.findIndex((timeReport) => timeReport.date === date);
   if (index >= 0) {
     timeReports.splice(index, 1);
   }
 }
 
 export function saveTimeReport(timeReport) {
-  const timeReportInDb = timeReports.find(tr => tr.id === timeReport.id) || {};
+  const timeReportInDb =
+    timeReports.find((tr) => tr.id === timeReport.id) || {};
   timeReportInDb.date = timeReport.date;
   timeReportInDb.startHours = timeReport.startHours;
   timeReportInDb.endHour = timeReport.endHour;
