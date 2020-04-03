@@ -10,7 +10,8 @@ import {
 class CalendarPage extends Component {
   state = {
     show: false,
-    selectedDate: null
+    selectedDate: null,
+    timeReports: getTimeReports()
   };
 
   handleDateSelect = date => this.setState({ selectedDate: date });
@@ -24,7 +25,9 @@ class CalendarPage extends Component {
     this.setState({ show: false });
   };
 
-  handleDelete = id => deleteTimeReport(id);
+  handleDelete = id => {
+    deleteTimeReport(id);
+  };
 
   render() {
     return (
