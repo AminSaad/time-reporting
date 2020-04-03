@@ -25,10 +25,11 @@
   --main-color: #1a3cff;
   --text-color: #777;
   --text-color-light: #ccc;
-  --border-color: #eee;
+  --border-color: rgba(0, 0, 0, 0.219);
   --bg-color: #f9f9f9;
   --neutral-color: #fff;
   --populated-color: #1aff1a;
+  --selected-color:#1a8fff
 }
 
 /* GENERAL */
@@ -171,7 +172,7 @@ main {
 }
 
 .calendar .body .selected {
-  border-top: 10px solid #1a8fff;
+  border-top: 10px solid var(--selected-color);
 }
 
 .calendar .body .row {

@@ -6,17 +6,17 @@ import _ from "lodash";
 import { format } from "date-fns";
 import { sv } from "date-fns/esm/locale";
 import Form from "./common/Form";
-import { getTimeReports } from "../services/fakeTimeReportService";
+import { getTimeReport } from "../services/fakeTimeReportService";
 
 class Modal extends Form {
   state = {
     data: {
-      date: "",
+      date: this.props.selectedDate,
       startHours: "",
       endHour: "",
       startMinutes: "",
       endMinutes: "",
-      activity: ""
+      activityId: ""
     },
     errors: {}
   };
@@ -35,7 +35,7 @@ class Modal extends Form {
     endMinutes: Joi.number()
       .required()
       .label("Slut minut"),
-    activity: Joi.string()
+    activityId: Joi.string()
       .required()
       .label("Aktivitet")
   });
@@ -66,9 +66,27 @@ class Modal extends Form {
     });
   }
 
+  componentDidMount() {
+    const formatedDate = format(this.props.selectedDate, "yyyy-MM-dd");
+    const timeReport = getTimeReport(formatedDate);
+    if (timeReport) {
+      this.setState({ data: this.mapToViewModel(timeReport) });
+    }
+  }
+
+  mapToViewModel(timeReport) {
+    return {
+      date: timeReport.date,
+      startHours: timeReport.startHours,
+      endHour: timeReport.endHour,
+      startMinutes: timeReport.startMinutes,
+      endMinutes: timeReport.endMinutes,
+      activityId: timeReport.activity._id
+    };
+  }
+
   render() {
     const { show, onClose, onSave, onDelete, selectedDate } = this.props;
-    console.log(getTimeReports());
     return (
       <BSMobal show={show} onHide={onClose}>
         <BSMobal.Header closeButton>
@@ -79,7 +97,7 @@ class Modal extends Form {
         <BSMobal.Body>
           <form>
             {this.renderSelect(
-              "activity",
+              "activityId",
               "Aktivitet:",
               this.activities,
               "Välj..."

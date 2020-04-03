@@ -10,37 +10,35 @@ import {
 class CalendarPage extends Component {
   state = {
     show: false,
-    selectedDate: new Date()
+    selectedDate: null
   };
 
   handleDateSelect = date => this.setState({ selectedDate: date });
 
-  handleClose = () => this.setState({ show: false });
+  handleClose = () => this.setState({ show: false, selectedDate: null });
 
   handleShow = () => this.setState({ show: true });
 
   handleSave = timeReport => {
     saveTimeReport(timeReport);
-    console.log("Saved", getTimeReports());
     this.setState({ show: false });
   };
 
-  handleDelete = id => {
-    deleteTimeReport(id);
-    console.log("Deleted");
-  };
+  handleDelete = id => deleteTimeReport(id);
 
   render() {
     return (
-      <div>
-        <Modal
-          onClose={this.handleClose}
-          onClick={this.handleShow}
-          onSave={this.handleSave}
-          onDelete={this.handleDelete}
-          show={this.state.show}
-          selectedDate={this.state.selectedDate}
-        ></Modal>
+      <>
+        {this.state.selectedDate && (
+          <Modal
+            onClose={this.handleClose}
+            onClick={this.handleShow}
+            onSave={this.handleSave}
+            onDelete={this.handleDelete}
+            show={this.state.show}
+            selectedDate={this.state.selectedDate}
+          ></Modal>
+        )}
         <div className="App">
           <main>
             <Calendar
@@ -51,7 +49,7 @@ class CalendarPage extends Component {
             />
           </main>
         </div>
-      </div>
+      </>
     );
   }
 }
