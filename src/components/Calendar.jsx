@@ -110,7 +110,6 @@ class Calendar extends Component {
     const timeReport = this.props.timeReports.find(
       (tr) => tr.date === formatedDate
     );
-    console.log("aladin", formatedDate, timeReport, this.props.timeReports);
     this.props.onDateSelect(timeReport);
     this.props.onClick();
   };

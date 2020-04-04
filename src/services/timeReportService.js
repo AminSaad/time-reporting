@@ -15,5 +15,10 @@ export function deleteTimeReport(timeReport) {
 }
 
 export function saveTimeReport(timeReport) {
+  if (timeReport._id) {
+    const body = { ...timeReport };
+    delete body._id;
+    return http.put(apiEndPoint + "/" + timeReport._id, body);
+  }
   return http.post(apiEndPoint, timeReport);
 }

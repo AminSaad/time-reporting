@@ -27,8 +27,8 @@ class CalendarPage extends Component {
 
   handleShow = () => this.setState({ show: true });
 
-  handleSave = (timeReport) => {
-    saveTimeReport(timeReport);
+  handleSave = async (timeReport) => {
+    await saveTimeReport(timeReport);
     this.setState({ show: false });
   };
 
@@ -37,7 +37,7 @@ class CalendarPage extends Component {
     const timeReports = originalTimeReports.filter(
       (tr) => tr._id !== timeReport._id
     );
-    this.setState({ timeReports });
+    this.setState({ timeReports, show: false });
 
     try {
       await deleteTimeReport(timeReport._id);
@@ -45,11 +45,11 @@ class CalendarPage extends Component {
       if (ex.response && ex.response.status === 404)
         toast("Denna rapport har redan tagits bort");
       this.setState({ timeReports: originalTimeReports });
+      console.log(timeReport);
     }
   };
 
   render() {
-    console.log("Calendar PAGE", this.state.selectedTimeReport);
     return (
       <>
         {this.state.show && (
