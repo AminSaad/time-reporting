@@ -1,12 +1,12 @@
 import React from "react";
 import { Button, Modal as BSMobal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
+
 import Joi from "@hapi/joi";
 import _ from "lodash";
 import { format } from "date-fns";
 import { sv } from "date-fns/esm/locale";
 import Form from "./common/Form";
-import { getTimeReport } from "../services/fakeTimeReportService";
 
 class Modal extends Form {
   state = {
@@ -16,90 +16,68 @@ class Modal extends Form {
       endHour: "",
       startMinutes: "",
       endMinutes: "",
-      activityId: ""
+      activityId: "",
     },
-    errors: {}
+    errors: {},
   };
 
   schema = Joi.object({
     _id: Joi.string(),
-    startHours: Joi.number()
-      .required()
-      .label("Start timme"),
-    endHour: Joi.number()
-      .required()
-      .label("Slut timme"),
-    startMinutes: Joi.number()
-      .required()
-      .label("Start minut"),
-    endMinutes: Joi.number()
-      .required()
-      .label("Slut minut"),
-    activityId: Joi.string()
-      .required()
-      .label("Aktivitet")
+    startHours: Joi.number().required().label("Start timme"),
+    endHour: Joi.number().required().label("Slut timme"),
+    startMinutes: Joi.number().required().label("Start minut"),
+    endMinutes: Joi.number().required().label("Slut minut"),
+    activityId: Joi.string().required().label("Aktivitet"),
   });
 
-  activities = [
-    {
-      _id: 1,
-      name: "Arbete"
-    },
-    {
-      _id: 2,
-      name: "Sjukdom"
-    },
-    {
-      _id: 3,
-      name: "VAB"
-    },
-    {
-      _id: 4,
-      name: "Ledighet"
-    }
-  ];
-
   getTimeArray(start, end) {
-    return _.range(start, end + 1).map(time => {
+    return _.range(start, end + 1).map((time) => {
       const name = time < 10 ? "0" + time : time;
       return { _id: time, name };
     });
   }
 
-  componentDidMount() {
-    const formatedDate = format(this.props.selectedDate, "yyyy-MM-dd");
-    const timeReport = getTimeReport(formatedDate);
-    if (timeReport) {
-      this.setState({ data: this.mapToViewModel(timeReport) });
-    }
+  async componentDidMount() {
+    const { timeReport } = this.props;
+    if (timeReport)
+      this.setState({
+        data: this.mapToViewModel(timeReport),
+      });
   }
 
   mapToViewModel(timeReport) {
     return {
-      date: timeReport.date,
       startHours: timeReport.startHours,
       endHour: timeReport.endHour,
       startMinutes: timeReport.startMinutes,
       endMinutes: timeReport.endMinutes,
-      activityId: timeReport.activity._id
+      activityId: timeReport.activity._id,
     };
   }
 
   render() {
-    const { show, onClose, onSave, onDelete, selectedDate } = this.props;
+    const {
+      show,
+      onClose,
+      onSave,
+      onDelete,
+      timeReport,
+      selectedDate,
+    } = this.props;
+    const currentDate = selectedDate
+      ? format(new Date(selectedDate), "do MMMM", { locale: sv })
+      : "";
     return (
       <BSMobal show={show} onHide={onClose}>
         <BSMobal.Header closeButton>
-          <BSMobal.Title>
-            Lägg till pass {format(selectedDate, "do MMMM", { locale: sv })}
-          </BSMobal.Title>
+          <BSMobal.Title>Lägg till pass {currentDate}</BSMobal.Title>
         </BSMobal.Header>
         <BSMobal.Body>
           <form>
             {this.renderSelect(
               "activityId",
               "Aktivitet:",
-              this.activities,
+              this.props.activities,
               "Välj..."
             )}
             <div className="form-row">
@@ -141,12 +119,11 @@ class Modal extends Form {
           </form>
         </BSMobal.Body>
         <BSMobal.Footer>
-          <Button
-            variant="danger"
-            onClick={() => onDelete(format(selectedDate, "yyyy-MM-dd"))}
-          >
-            Ta bort
-          </Button>
+          {timeReport && (
+            <Button variant="danger" onClick={() => onDelete(timeReport)}>
+              Ta bort
+            </Button>
+          )}
           <Button variant="secondary" onClick={onClose}>
             Stäng
           </Button>

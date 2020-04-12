@@ -10,19 +10,15 @@ import {
   endOfWeek,
   isSameMonth,
   isSameDay,
-  toDate
+  toDate,
 } from "date-fns";
 import { sv } from "date-fns/esm/locale";
-import { getTimeReports } from "../services/fakeTimeReportService";
+import { getTimeReport } from "../services/timeReportService";
 
 class Calendar extends Component {
   state = {
     currentMonth: new Date(),
-    timeReports: []
   };
-  componentDidMount() {
-    this.setState({ timeReports: getTimeReports() });
-  }
 
   renderHeader() {
     const dateFormat = "MMMM yyyy";
@@ -59,8 +55,8 @@ class Calendar extends Component {
   }
 
   renderCells() {
-    const { selectedDate } = this.props;
-    const { currentMonth, timeReports } = this.state;
+    const { selectedDate, timeReports } = this.props;
+    const { currentMonth } = this.state;
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart, { weekStartsOn: 1 });
@@ -77,7 +73,7 @@ class Calendar extends Component {
         let cssClass = "col cell";
         const cloneDay = day;
         const foundDate = timeReports.find(
-          timeReport => timeReport.date === format(day, "yyyy-MM-dd")
+          (timeReport) => timeReport.date === format(day, "yyyy-MM-dd")
         );
         if (foundDate) {
           cssClass += " populated";
@@ -110,19 +106,27 @@ class Calendar extends Component {
     return <div className="body">{rows}</div>;
   }
 
-  onDateClick = day => {
-    this.props.onDateSelect(day);
+  onDateClick = async (day) => {
+    const formatedDate = format(day, "yyyy-MM-dd");
+    try {
+      const { data: timeReport } = await getTimeReport(formatedDate);
+      this.props.onTimeReportSelect(timeReport);
+      this.props.onDateSelect(formatedDate);
+    } catch {
+      this.props.onDateSelect(formatedDate);
+    }
+
     this.props.onClick();
   };
 
   nextMonth = () => {
     this.setState({
-      currentMonth: addMonths(this.state.currentMonth, 1)
+      currentMonth: addMonths(this.state.currentMonth, 1),
     });
   };
   prevMonth = () => {
     this.setState({
-      currentMonth: subMonths(this.state.currentMonth, 1)
+      currentMonth: subMonths(this.state.currentMonth, 1),
     });
   };
 
