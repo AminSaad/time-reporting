@@ -6,7 +6,7 @@ import Select from "./Select";
 class Form extends Component {
   state = {
     data: {},
-    errors: {}
+    errors: {},
   };
 
   validate() {
@@ -41,7 +41,7 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const errors = this.validate();

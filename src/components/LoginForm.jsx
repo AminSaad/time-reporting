@@ -7,19 +7,14 @@ class LoginForm extends Form {
   state = {
     data: {
       username: "",
-      password: ""
+      password: "",
     },
-    errors: {}
+    errors: {},
   };
 
   schema = Joi.object({
-    username: Joi.string()
-      .min(3)
-      .required()
-      .label("Username"),
-    password: Joi.string()
-      .required()
-      .label("Password")
+    username: Joi.string().min(3).required().label("Username"),
+    password: Joi.string().required().label("Password"),
   });
 
   doSubmit() {
