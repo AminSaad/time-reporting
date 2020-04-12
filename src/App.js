@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import RegisterForm from "./components/RegisterForm";
 import CalendarPage from "./components/CalendarPage";
 import LoginForm from "./components/LoginForm";
@@ -9,6 +10,7 @@ class App extends Component {
   render() {
     return (
       <>
+        <ToastContainer />
         <div className="container">
           <Switch>
             <Route path="/login" component={LoginForm} />
